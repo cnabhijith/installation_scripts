@@ -1,0 +1,33 @@
+GIT
+
+	1. Git clone <git  repo link>
+	2. touch <filename>.txt = To crate file 
+	3. git status= Status of git
+	4. git add . = add to remote repo 
+	5. Git add <file name> 
+	6. Git commit -m "message" = commit the file
+	7. Git push origin <branch name>
+
+To check sync remote to local
+Fetch and pull
+
+	1. Git fetch = update to the local 
+	2. Git pull = make local repo sync
+	3. Git pull origin main
+
+Create a new branch
+
+	1. Git branch <branch name>
+	2. Git branch -a = to see all branch 
+	3. Git branch -r = on remot repo
+	4. Git branch = on local
+	5. Git checkout <branch name>= to switch the branch
+	6. Git log
+	7. Git log --oneline
+
+Delete branch
+	1. Git branch -D <branch name> = local repo 
+	2. Git push origin --delete <branch name>= remote repo 
+	
+Chery pick
+	1. Git cherry-pick <file id> = to move file to another branch 
