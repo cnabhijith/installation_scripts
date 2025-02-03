@@ -1,0 +1,54 @@
+LINUX
+USER ADDING IN LINUX
+
+	1. Add user
+	Sudo adduser <user name>
+	2. Logging to user
+	Su - <username>
+	3. Giving permission to sudo( in main vm)
+	Sudo visudo 
+	<user name> ALL=(ALL:ALL) ALL
+	4. Password disabling
+	<user name> ALL=(ALL) NOPASSWD: /sbin/reboot
+	
+	
+	
+ACCSESING VM WITH OWN KEY
+
+	1. Ssh-keygen
+	Enter ,enter
+	2. Cd  /home/ubuntu/.ssh
+	Ls
+	Copy the private key
+	
+	Cat <private key id>
+	Save it somewher extension with .pem
+	
+	3. We want to create authorized key(if not availble)
+	Vi authorized_keys
+	And paste the public key here
+	For that open new window of VM in mobaxterm
+	
+	Su - <username>
+	
+	Cd .ssh
+	
+	Ls
+	 copy pub key and paste to autorozised key folder
+	
+	
+	
+	4. Give the ownership in main vm 
+	chmod 600 ~/.ssh/authorized_keys
+	
+	
+	
+	CHANGE PASSWORD FOR PASSWORD
+	
+	1. Sudo passwd <username>
+	
+	CHANGE USER NAME
+	1. Sudo usermod -l <new name> <old name>
+
+         IF USER USING THE VM 
+Sudo kill <copy the last id>
