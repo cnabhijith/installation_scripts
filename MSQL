@@ -1,0 +1,45 @@
+MY SQL COMMAND
+
+Sudo apt install mysql-server
+Sudo systemctl restart mysql =restart
+
+	1. Setup a password for user
+We need to login database
+ sudo mysql -u root
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+FLUSH PRIVILEGES;
+
+	2. Create a new user
+	CREATE USER 'name'@'%' IDENTIFIED BY 'name' ;
+	GARNT ALL PRIVILEGES ON *.* TO 'name'@'%';
+	FLUSH PRIVILEGES;
+
+
+GRANT ALL PRIVILEGES ON <database name>. * TO 'user'@' localhost;
+FLUSH PRIVILEGES;
+
+GRANT SELECT, IINSERT ON <databse name>. * TO 'username'@'localhost';
+Show databases;
+Create database <name>;
+Use <name>;
+
+	CREATE TABLE users (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		name VARCHAR(255) NOT NULL,
+		email VARCHAR(255) NOT NULL UNIQUE,
+		role ENUM('Admin', 'User') NOT NULL
+		);
+		
+		
+		
+		Check out putr
+		
+		Use <databse name>;
+		 select * from users;
+		
+		
+For PHP MY admin
+
+/etc/mysql/mysql.conf.d/mysql.cnf
+
