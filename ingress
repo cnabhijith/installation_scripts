@@ -1,0 +1,80 @@
+ SETUP INGRESS & SSL
+0. Deploy the application
+1. Install Nginx Ingress Controller
+First, you need to install the Nginx Ingress Controller to handle traffic into your cluster:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingressnginx/main/deploy/static/provider/cloud/deploy.yaml
+Wait for the Nginx Ingress Controller pods to be up and running:
+kubectl get pods -n ingress-nginx
+2. Install Cert-Manager
+Cert-Manager is required to manage Let's Encrypt certificates for automatic SSL.
+2.1 Install Cert-Manager CRDs
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.12.2/certmanager.yaml
+Verify that Cert-Manager is installed:
+kubectl get pods -n cert-manager
+3. Create Let's Encrypt ClusterIssuer
+We will configure ClusterIssuer to request certificates from Let's Encrypt's Production environment.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+ name: letsencrypt-prod
+spec:
+ acme:
+ server: https://acme-v02.api.letsencrypt.org/directory
+ email: devopsbyaditya@gmail.com # Replace with your email
+ privateKeySecretRef:
+ name: letsencrypt-prod
+ solvers:
+ - http01:
+ ingress:
+ class: nginx
+Create the issuer:
+kubectl apply -f letsencrypt-clusterissuer.yaml
+4. Create the Ingress Resource
+Create the Ingress resource for your application with the correct domain (www.shackverse.co) and 
+TLS enabled. Save the following YAML in a file called ingress.yml:
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ name: bankapp-ingress
+ annotations:
+ cert-manager.io/cluster-issuer: letsencrypt-prod
+ nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+ nginx.ingress.kubernetes.io/rewrite-target: /
+ nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+ ingressClassName: nginx
+ rules:
+ - host: www.shackverse.co
+ http:
+ paths:
+ - path: /
+ pathType: Prefix
+ backend:
+ service:
+ name: bankapp-service
+ port:
+ number: 80
+ tls:
+ - hosts:
+ - www.shackverse.co
+ secretName: shackverse-co-tls
+Apply the Ingress:
+kubectl apply -f ingress.yml
+# Add the LB url from Ingress created for application in your domain DNS.
+5. Verify the Setup
+To verify the setup:
+1. Check Certificate Status:
+You can check if the certificate was issued correctly with the following command:
+kubectl get certificates
+You should see the Ready status as True for your certificate (shackverse-co-tls).
+2. Verify Ingress:
+Ensure the ingress is correctly configured by describing it:
+kubectl describe ingress bankapp-ingress
+The output should show the domain (www.shackverse.co), the TLS configuration, and the backend 
+service.
+3. Test Access:
+Visit https://www.shackverse.co in your browser to verify that SSL is working and that the app is 
+accessible over HTTPS.
+Optional: Check the Cert-Manager Logs
+If any issues arise, check the Cert-Manager logs:
+kubectl logs -n cert-manager -l app=cert-manager
