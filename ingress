@@ -2,7 +2,7 @@
 0. Deploy the application
 1. Install Nginx Ingress Controller
 First, you need to install the Nginx Ingress Controller to handle traffic into your cluster:
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingressnginx/main/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 Wait for the Nginx Ingress Controller pods to be up and running:
 kubectl get pods -n ingress-nginx
 2. Install Cert-Manager
