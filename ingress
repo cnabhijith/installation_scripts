@@ -8,7 +8,7 @@ kubectl get pods -n ingress-nginx
 2. Install Cert-Manager
 Cert-Manager is required to manage Let's Encrypt certificates for automatic SSL.
 2.1 Install Cert-Manager CRDs
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.12.2/certmanager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.12.2/cert-manager.yaml
 Verify that Cert-Manager is installed:
 kubectl get pods -n cert-manager
 3. Create Let's Encrypt ClusterIssuer
