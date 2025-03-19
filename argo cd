@@ -5,7 +5,7 @@ kubectl get svc -n argocd
 
 kubectl edit svc -n argocd argocd-server  
 
-cluster ip to loadbalancer
+cluster ip to LoadBalancer
 
 kubectl get secrets -n argocd
 
