@@ -4,3 +4,6 @@ sudo apt install unzip
 unzip awscliv2.zip
 sudo ./aws/install
 aws configure
+
+
+-----------------------------------
